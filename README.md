@@ -54,6 +54,9 @@ Appcelerator Text Field concept Material Design!
 
 <h3>Attributes</h3>
 
+<pre> <b>- animationDuration: Number</b> 
+       duration animation.</pre>
+
 <pre> <b>- width: String, Number</b> 
        sets the width.</pre>
 
