@@ -50,6 +50,9 @@ Appcelerator Text Field concept Material Design!
 
 <h3>Attributes</h3>
 
+<pre> <b>- width: String, Number</b> 
+       sets the width.</pre>
+
  <pre> <b>- colorFocus: String</b> 
        sets the color when the focused field.</pre>
       
