@@ -45,3 +45,33 @@ Appcelerator Text Field concept Material Design!
   	Ti.API.info("even focus");
   });
   </pre>	
+
+--------------------------------------------------------------------------------
+
+<h3>Attributes</h3>
+
+ <pre> <b>- colorFocus: String</b> 
+       sets the color when the focused field.</pre>
+      
+  <pre> <b>- colorPattern: String</b> 
+      sets the standard color when the field started.</pre>
+  
+  <pre> <b>- colorFont: String</b> 
+      sets the font color.</pre>
+  
+  <pre> <b>- titleHint: String</b> 
+      sets title.</pre>
+  
+  <pre> <b>- top: String, Number</b> 
+      defines the top.</pre>
+  
+  <pre> <b>- bottom: String, Number</b> 
+      defines the bottom.</pre>
+
+  <pre> <b>- left: String, Number</b> 
+      defines the left.</pre>
+  
+  <pre> <b>- right: String, Number</b> 
+      defines the right.</pre>
+
+  
