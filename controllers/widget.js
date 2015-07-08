@@ -88,8 +88,8 @@ exports.setValue = function(value, up) {
 };
 
 exports.listener = function(event, callback) {
-	$.textfield.addEventListener(event, function(event) {
-		callback(event);
+	$.textfield.addEventListener(event, function(e) {
+		callback(e);
 	});
 };
 
@@ -100,6 +100,8 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 
 	_config.color.post = args.colorFocus || _config.color.post;
 	_config.color.pattern = args.colorPattern || _config.color.pattern;
+	
+	_config.duration = args.animationDuration || _config.duration;
 
 	var _init = {
 		titleHint : args.titleHint,
