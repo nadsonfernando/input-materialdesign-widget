@@ -1,7 +1,7 @@
 <Alloy>
 	<View id="container">
-		<TextField id="textfield"/>
 		<Label id="hint"/>
+		<TextField id="textfield"/>
 		<View id="footer"/>
 	</View>
 </Alloy>

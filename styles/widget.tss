@@ -22,7 +22,9 @@
 	font: {
 		fontSize: 22
 	},
-	color: '#444'
+	color: '#444',
+	backgroundFocusedColor: false,
+	tintColor: 'green'
 },
 
 /**
