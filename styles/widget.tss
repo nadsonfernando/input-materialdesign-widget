@@ -9,7 +9,11 @@
  */
 "#container": {
 	width: '90%',
-	height: 80
+	height: 80,
+	shadow:{
+        shadowRadius:5,
+        shadowOffset:{x:10, y:10}
+   }
 },
 
 /**
@@ -24,7 +28,7 @@
 	},
 	color: '#444',
 	backgroundFocusedColor: false,
-	tintColor: 'green'
+	tintColor: '#aaa'
 },
 
 /**
