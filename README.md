@@ -1,8 +1,10 @@
 # input-materialdesign-widget
 Appcelerator Text Field concept Material Design!
 
-<h2>Example</h2>
+<h2>Installation</h2>
+<pre> <i>gittio install input-materialdesign@version</i></pre>
 
+<h2>Example</h2>
 <img src="asset/example-input.gif"/>
 
 <b><h3>Functions</h3></b>
