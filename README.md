@@ -2,7 +2,7 @@
 Appcelerator Text Field concept Material Design!
 
 <h2>Installation</h2>
-<pre> <i>gittio install input-materialdesign@version</i></pre>
+<pre> <i>$ gittio install input-materialdesign@version</i></pre>
 
 <h2>Example</h2>
 <img src="asset/example-input.gif"/>
