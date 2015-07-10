@@ -1,7 +1,7 @@
-/** @author: Nádson Fernando -------------------------------------------------------
- *  @email: nadsonfernando1@gmail.com ----------------------------------------------
+/** @author: Nádson Fernando 
+ *  @email: nadsonfernando1@gmail.com 
  *  @description: controller input
- *  @version: 1.0 ------------------------------------------------------------------
+ *  @version: 1.0 
  */
 
 var args = arguments[0] || {};
