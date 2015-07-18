@@ -1,0 +1,26 @@
+//
+// firstTextField
+//
+"#firstTextField":{
+	colorPatter: 'green'
+  , colorFocus: 'blue'
+  , titleHint: '@username'
+  , returnKey: Titanium.UI.RETURNKEY_NEXT
+  , keyboardType: Titanium.UI.KEYBOARD_EMAIL
+  , left: '20%'
+  , top: '20%'
+}
+
+//
+// secondTextField
+//
+"#secondTextField":{
+	colorPatter: 'red'
+  , colorFocus: 'gray'
+  , titleHint: 'password'
+  , returnKey: Titanium.UI.RETURNKEY_GO
+  , keyboardType: Titanium.UI.KEYBOARD_DEFAULT
+  , password: true
+  , left: '20%'
+  , top: '50%'
+}
