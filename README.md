@@ -50,7 +50,15 @@ Appcelerator Text Field concept Material Design!
   $.textfield.listener('focus', function() {
   	Ti.API.info("even focus");
   });
-  </pre>	
+  </pre>
+
+- <h5>Expose Focus & Blur Method</h5>
+<pre>
+// Focus 
+$.textfield.focus();
+// Blur
+$.textfield.blur();
+</pre>
 
 --------------------------------------------------------------------------------
 
@@ -85,5 +93,13 @@ Appcelerator Text Field concept Material Design!
   
   <pre> <b>- right: String, Number</b> 
       defines the right.</pre>
+      
+  <pre> <b>- keyboardType: String </b>
+  	  define the keyboardType.</pre>
+  
+  <pre> <b>- returnKey: String </b>
+  	  define the returnKey from keyboard.</pre>
 
+  <pre> <b>- password: Boolean </b>
+  	  define if TextField should have passwordMask.</pre>
   
