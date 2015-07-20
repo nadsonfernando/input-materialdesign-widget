@@ -94,6 +94,16 @@ exports.listener = function(event, callback) {
 	});
 };
 
+exports.blur = function( toFocus ){
+	$.textfield.blur();
+	_animation.ANIMATION_DOWN();
+};
+
+exports.focus = function(){
+	$.textfield.focus();
+	_animation.ANIMATION_UP();
+};
+
 $.textfield.addEventListener(_events.FOCUS, _animation.ANIMATION_UP);
 $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 
@@ -111,7 +121,10 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 		left : args.left,
 		right : args.right,
 		bottom : args.bottom,
-		colorFont : args.colorFont
+		colorFont : args.colorFont,
+		keyboardType: args.keyboardType,
+		returnKey: args.returnKey,
+		password: args.password
 	};
 
 	if (!_init.titleHint)
@@ -137,6 +150,15 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 
 	if (_init.colorFont)
 		$.textfield.setColor(_init.colorFont);
+
+	if(_init.keyboardType)
+		$.textfield.setKeyboardType(_init.keyboardType);
+
+	if(_init.returnKey)
+		$.textfield.setReturnKeyType(_init.returnKey);
+
+	if(_init.password)
+		$.textfield.setPasswordMask(_init.password);
 
 	$.hint.setText(_init.titleHint);
 	$.hint.setColor(_config.color.pattern);
