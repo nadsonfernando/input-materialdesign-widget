@@ -96,12 +96,10 @@ exports.listener = function(event, callback) {
 
 exports.blur = function( toFocus ){
 	$.textfield.blur();
-	_animation.ANIMATION_DOWN();
 };
 
 exports.focus = function(){
 	$.textfield.focus();
-	_animation.ANIMATION_UP();
 };
 
 $.textfield.addEventListener(_events.FOCUS, _animation.ANIMATION_UP);
