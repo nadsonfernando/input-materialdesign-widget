@@ -20,7 +20,6 @@
 var args = arguments[0] || {};
 
 @Object _config
-@attrs
 @Object color
 @String pattern
 @String post
@@ -99,7 +98,7 @@ var _animation = {
 
 
 @exports Method getValue
-@return Number
+@return value
 exports.getValue = function() {
 	return $.textfield.getValue();
 };
