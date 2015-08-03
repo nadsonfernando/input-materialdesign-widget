@@ -4,8 +4,27 @@
  *  @version: 1.0 
  */
 
+@param {Number }animationDuration
+@param {String, Number} width
+@param {String } colorFocus
+@param {String} colorPattern
+@param {String} colorFont
+@param {String} titleHint
+@param {String, Number} top
+@param {String, Number} bottom 
+@param {String, Number} left 
+@param {String, Number} right 
+@param {String} keyboardType 
+@param {String} returnKey 
+@param {Boolean} password  
 var args = arguments[0] || {};
 
+@Object _config
+@attrs
+@Object color
+@String pattern
+@String post
+@Number duration    
 var _config = {
 	color : {
 		pattern : '#aaa',
@@ -14,13 +33,21 @@ var _config = {
 	duration : 200
 };
 
+@Object _events
+@String CLICK
+@String FOCUS
+@String BLUR
 var _events = {
 	CLICK : 'click',
 	FOCUS : 'focus',
 	BLUR : 'blur'
 };
 
+@Object _animation
 var _animation = {
+	
+	@Method ANIMATION_UP
+	// Animate up
 	ANIMATION_UP : function() {
 
 		var lenHint = _.size($.hint.getText());
@@ -38,7 +65,9 @@ var _animation = {
 			"backgroundColor" : _config.color.post,
 		});
 	},
-
+	
+	@Method ANIMATION_DOWN
+	// Animate down	
 	ANIMATION_DOWN : function() {
 
 		var lenHint = _.size($.hint.getText());
@@ -68,43 +97,53 @@ var _animation = {
 	}
 };
 
+
+@exports Method getValue
+@return Number
 exports.getValue = function() {
 	return $.textfield.getValue();
 };
 
+@exports Method ANIMATION_UP
 exports.ANIMATION_UP = function() {
 	_animation.ANIMATION_UP();
 };
 
+@exports Method ANIMATION_DOWN
 exports.ANIMATION_DOWN = function() {
 	_animation.ANIMATION_DOWN();
 };
 
+@exports Method setValue
 exports.setValue = function(value, up) {
-
 	if (up)
 		_animation.ANIMATION_UP();
 
 	$.textfield.setValue(value);
 };
 
+@exports Method listener
 exports.listener = function(event, callback) {
 	$.textfield.addEventListener(event, function(e) {
 		callback(e);
 	});
 };
 
+@exports Method blur
 exports.blur = function( toFocus ){
 	$.textfield.blur();
 };
 
+@exports Method focus
 exports.focus = function(){
 	$.textfield.focus();
 };
 
+//Listener event
 $.textfield.addEventListener(_events.FOCUS, _animation.ANIMATION_UP);
 $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 
+@init
 (function() {
 
 	_config.color.post = args.colorFocus || _config.color.post;
