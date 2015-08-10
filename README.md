@@ -12,7 +12,6 @@ Appcelerator Text Field concept Material Design!
   - <h5>getValue()</h5>
   	<i>returns the value of input.</i>
   	<br>
-  	.js 
   	<pre>
   	$.textfield.getValue();
   	</pre>
@@ -20,15 +19,20 @@ Appcelerator Text Field concept Material Design!
   - <h5>setValue(paran)</h5>
   	<i>assigns value to input.</i>
   	<br>
-  	.js 
   	<pre>
   	$.textfield.setValue(23);
-  	</pre> 	
+  	</pre> 
+  
+  - <h5>setEditable(boolean)</h5>
+  	<i>The input block.</i>
+  	<br>
+  	<pre>
+  	$.textfield.setEditable(true);
+  	</pre>
   	
   - <h5>ANIMATION_UP()</h5>
   	<i>animation rise.</i>
   	<br>
-  	.js 
   	<pre>
   	$.textfield.ANIMATION_UP();
   	</pre> 	
@@ -36,7 +40,6 @@ Appcelerator Text Field concept Material Design!
   - <h5>ANIMATION_DOWN()</h5>
   	<i>animation descent.</i>
   	<br>
-  	.js 
   	<pre>
   	$.textfield.ANIMATION_DOWN();	
   	</pre> 	
@@ -44,7 +47,6 @@ Appcelerator Text Field concept Material Design!
 - <h5>listener(event, callback)</h5>
   <i>assigns event for input , listening to a callback.</i>
   <br>
-  .js 
   <pre>
   
   $.textfield.listener('focus', function() {
@@ -102,4 +104,7 @@ $.textfield.blur();
 
   <pre> <b>- password: Boolean </b>
   	  define if TextField should have passwordMask.</pre>
+  
+  <pre> <b>- editable: Boolean </b>
+  	  defines whether the input starts blocked.</pre>	  
   
