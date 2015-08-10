@@ -29,7 +29,8 @@ var _config = {
 		pattern : '#aaa',
 		post : '#208FE5'
 	},
-	duration : 200
+	duration : 200,
+	editable: true
 };
 
 @Object _events
@@ -40,17 +41,18 @@ var _events = {
 	CLICK : 'click',
 	FOCUS : 'focus',
 	BLUR : 'blur'
-};
+}, ;
 
 @Object _animation
 var _animation = {
 	
 	@Method ANIMATION_UP
-	// Animate up
 	ANIMATION_UP : function() {
-
+		if(!_config.editable) 
+			return;
+		
 		var lenHint = _.size($.hint.getText());
-		lenHint += lenHint * 0.50;
+		lenHint += lenHint * (lenHint > 25 ? 0.30 : 0.40);
 
 		$.hint.animate({
 			"top" : 0,
@@ -66,12 +68,13 @@ var _animation = {
 	},
 	
 	@Method ANIMATION_DOWN
-	// Animate down	
 	ANIMATION_DOWN : function() {
-
+		if(!_config.editable) 
+			return;
+		
 		var lenHint = _.size($.hint.getText());
-		lenHint += lenHint * 0.50;
-
+		lenHint += lenHint * (lenHint > 25 ? 0.30 : 0.40);
+		
 		$.footer.animate({
 			"backgroundColor" : _config.color.pattern,
 		});
@@ -160,7 +163,8 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 		colorFont : args.colorFont,
 		keyboardType: args.keyboardType,
 		returnKey: args.returnKey,
-		password: args.password
+		password: args.password,
+		editable: args.editable
 	};
 
 	if (!_init.titleHint)
@@ -199,6 +203,13 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 	$.hint.setText(_init.titleHint);
 	$.hint.setColor(_config.color.pattern);
 	$.footer.setBackgroundColor(_config.color.pattern);
+	
+	if(!eval(_init.editable)) {
+		$.container.setOpacity(0.3);
+		$.textfield.setEditable(false);
+		
+		_config.editable = false;
+	}
 
 })();
 
