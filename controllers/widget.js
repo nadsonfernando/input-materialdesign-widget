@@ -27,10 +27,12 @@ var args = arguments[0] || {};
 var _config = {
 	color : {
 		pattern : '#aaa',
-		post : '#208FE5'
+		post : '#208FE5',
+		exceedingColor : "FF0000"
 	},
 	duration : 200,
-	editable: true
+	editable: true,
+	exceeding: false
 };
 
 @Object _events
@@ -40,8 +42,9 @@ var _config = {
 var _events = {
 	CLICK : 'click',
 	FOCUS : 'focus',
-	BLUR : 'blur'
-}, ;
+	BLUR : 'blur',
+	CHANGE : 'change'
+};
 
 @Object _animation
 var _animation = {
@@ -52,18 +55,19 @@ var _animation = {
 			return;
 		
 		var lenHint = _.size($.hint.getText());
+		var color = _config.exceeding ? _config.color.exceeding : _config.color.post;
 		lenHint += lenHint * (lenHint > 25 ? 0.30 : 0.40);
 
 		$.hint.animate({
 			"top" : 0,
-			"color" : _config.color.post,
+			"color" : color,
 			"transform" : Ti.UI.create2DMatrix().scale(0.7),
-			"left" : -lenHint,
+			"left" : Ti.Platform.osname == "android" ? (-lenHint + 2) : -lenHint,//Fix hint being cut off on Android
 			"duration" : _config.duration
 		});
 
 		$.footer.animate({
-			"backgroundColor" : _config.color.post,
+			"backgroundColor" : color,
 		});
 	},
 	
@@ -73,15 +77,16 @@ var _animation = {
 			return;
 		
 		var lenHint = _.size($.hint.getText());
+		var color = _config.exceeding ? _config.color.exceeding : _config.color.pattern;
 		lenHint += lenHint * (lenHint > 25 ? 0.30 : 0.40);
 		
 		$.footer.animate({
-			"backgroundColor" : _config.color.pattern,
+			"backgroundColor" : color
 		});
 
 		var attrsHint = {
-			"top" : 30,
-			"color" : _config.color.pattern,
+			"top" : $.textfield.top,
+			"color" : color,
 			"transform" : Ti.UI.create2DMatrix().scale(1),
 			"left" : 0,
 			"duration" : _config.duration
@@ -150,6 +155,7 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 
 	_config.color.post = args.colorFocus || _config.color.post;
 	_config.color.pattern = args.colorPattern || _config.color.pattern;
+	_config.color.exceeding = args.exceedingColor || "#FF0000";//red
 	
 	_config.duration = args.animationDuration || _config.duration;
 
@@ -164,7 +170,9 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 		keyboardType: args.keyboardType,
 		returnKey: args.returnKey,
 		password: args.password,
-		editable: args.editable
+		editable: args.editable,
+		maxLength: args.maxLength,
+		minLength: args.minLength
 	};
 
 	if (!_init.titleHint)
@@ -212,6 +220,53 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 		
 		_config.editable = false;
 	}
-
+	
+	if(_init.maxLength > 0) {
+		//Create counter label
+		var counter = Ti.UI.createLabel({
+			height: 		15,
+			width: 			64,
+			font: {
+				fontSize: 	11
+			},
+			opacity: 		0.7,
+			right: 			-64,//Stay out of the screen on init, will animate in upon change event
+			textAlign: 		"right",
+			bottom: 		0
+		});
+		$.container.add(counter);
+		
+		//Add on change event listener
+		$.textfield.addEventListener(_events.CHANGE, function(event){
+			var length = event.value.length;
+			
+			//Animate check
+			if(length == 0){
+				counter.animate( { right:-64, duration:350});//Animate out
+				return;
+			}else if(length == 1)
+				counter.animate( { right:0, duration:350});//Animate in
+				
+			//Check minLength value or maxLength value
+			if(length < _init.minLength || length > _init.maxLength){
+				//Set flag for next focus / blur event
+				_config.exceeding = true;
+				
+				//Set exceeding color
+				$.footer.backgroundColor = _config.color.exceeding;
+				counter.color = _config.color.exceeding;
+				$.hint.color = _config.color.exceeding;
+			}else if($.footer.backgroundColor != _config.color.post){
+				//Set flag for next focus / blur event
+				_config.exceeding = false;
+				
+				//Reset to color back to normal1			
+				$.footer.backgroundColor = _config.color.post;
+				counter.color = "#000";
+				$.hint.color = _config.color.post;
+			}
+			//Update label
+			counter.setText(length + " / " + _init.maxLength);
+		});
+	}
 })();
-
