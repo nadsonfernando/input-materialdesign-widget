@@ -7,6 +7,9 @@ Appcelerator Text Field concept Material Design!
 <h2>Example</h2>
 <img src="asset/example-input.gif"/>
 
+<p>Example for number of characters.<p>
+<img src="asset/androidl.png"/>
+
 <b><h3>Functions</h3></b>
 
   - <h5>getValue()</h5>
@@ -56,9 +59,7 @@ Appcelerator Text Field concept Material Design!
 
 - <h5>Expose Focus & Blur Method</h5>
 <pre>
-// Focus 
 $.textfield.focus();
-// Blur
 $.textfield.blur();
 </pre>
 
@@ -106,5 +107,14 @@ $.textfield.blur();
   	  define if TextField should have passwordMask.</pre>
   
   <pre> <b>- editable: Boolean </b>
-  	  defines whether the input starts blocked.</pre>	  
+  	  defines whether the input starts blocked.</pre>	 
+  
+  <pre> <b>- maxLength: Number </b>
+  	  Defines the maximum number of characters.</pre>		  
+  
+   <pre> <b>- minLength: Number </b>
+  	  Defines the minimum number of characters.</pre>		 
+  	 
+  <pre> <b>- exceedingColor: String </b>
+  	  Set the color when it exceeds the reported number of characters.</pre>	  
   
