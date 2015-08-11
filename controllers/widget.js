@@ -204,6 +204,8 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 	$.hint.setColor(_config.color.pattern);
 	$.footer.setBackgroundColor(_config.color.pattern);
 	
+	if(!_init.editable) return;
+	
 	if(!eval(_init.editable)) {
 		$.container.setOpacity(0.3);
 		$.textfield.setEditable(false);
