@@ -1,14 +1,23 @@
 //
 // firstTextField
 //
+
+"#win":{
+	backgroundColor: "#FFF"
+}
+
 "#firstTextField":{
 	colorPatter: 'green'
   , colorFocus: 'blue'
-  , titleHint: '@username'
+  , titleHint: 'Username'
   , returnKey: Titanium.UI.RETURNKEY_NEXT
   , keyboardType: Titanium.UI.KEYBOARD_EMAIL
-  , left: '20%'
+  , left: '10%'
   , top: '20%'
+  , width: '70%'
+  , editable: true
+  , maxLength: 10
+  , exceedingColor: "#F44336"
 }
 
 //
@@ -17,10 +26,12 @@
 "#secondTextField":{
 	colorPatter: 'red'
   , colorFocus: 'gray'
-  , titleHint: 'password'
+  , titleHint: 'Password'
   , returnKey: Titanium.UI.RETURNKEY_GO
   , keyboardType: Titanium.UI.KEYBOARD_DEFAULT
   , password: true
-  , left: '20%'
+  , left: '10%'
   , top: '50%'
+  , width: '70%'
+  , editable: true
 }
