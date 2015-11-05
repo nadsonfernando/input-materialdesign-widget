@@ -193,15 +193,15 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 	if(_init.maxLength > 0) {
 		//Create counter label
 		var counter = Ti.UI.createLabel({
-			height: 15,
-			width: 64,
-			font: {
+			"height": 15,
+			"width": 64,
+			"font": {
 				fontSize: 11
 			},
-			opacity: 0.7,
-			right: -64, //Stay out of the screen on init, will animate in upon change event
-			textAlign: "right",
-			bottom:	0
+			"opacity": 0.7,
+			"right": -64, //Stay out of the screen on init, will animate in upon change event
+			"textAlign": "right",
+			"bottom": 0
 		});
 		$.container.add(counter);
 		
@@ -212,12 +212,16 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 			//Animate check
 			if(length == 0) {
 				counter.animate({
-					right:-64, 
-					duration:350
+					"right":-64, 
+					"duration":350
 				}); //Animate out
 				return;
+				
 			} else if(length == 1) {
-				counter.animate( { right:0, duration:350}); //Animate in
+				counter.animate({
+					right:0, 
+					duration:350
+				}); //Animate in
 			}
 			//Check minLength value or maxLength value
 			if(length < _init.minLength || length > _init.maxLength){
@@ -226,7 +230,7 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 				
 				//Set exceeding color
 				$.footer.backgroundColor = _config.color.exceeding;
-				counter.color = _config.color.exceeding;
+				counter["color"] = _config.color.exceeding;
 				$.hint.color = _config.color.exceeding;
 				
 			}else if($.footer.backgroundColor != _config.color.post){
@@ -235,7 +239,7 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 				
 				//Reset to color back to normal1			
 				$.footer.backgroundColor = _config.color.post;
-				counter.color = "#000";
+				counter["color"] = "#000";
 				$.hint.color = _config.color.post;
 			}
 			
