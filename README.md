@@ -7,15 +7,41 @@ supporting multiple platforms, in addition to the android .
 <h2>Installation</h2>
 <pre> <i>$ gittio install input-materialdesign@version</i></pre>
 
-<h5>Simple examples</h5>
+<h3>Usage 
+  <a href="http://gitt.io/component/input-materialdesign">
+    <img src="asset/gittio-usage.png"/> 
+  </a>
+</h3>
 
+<h5>Simple examples</h5>
 <img src="asset/gif_simple.gif"/>
+```xml
+  <Alloy>
+	 <Window id="win">
+	  	<Widget src="input-materialdesign"/>
+  	</Window>
+  </Alloy>
+```
 
 <h5>Example with required field</h5>
 <img src="asset/gif_required.gif"/>
+```xml
+  <Alloy>
+	 <Window id="win">
+	  	<Widget src="input-materialdesign" required="Required Field"/>
+  	</Window>
+  </Alloy>
+```
 
 <h5>Example with limited field of information per character</h5>
 <img src="asset/gif_max.gif"/>
+```xml
+  <Alloy>
+	 <Window id="win">
+	  	<Widget src="input-materialdesign" maxLength="10"/>
+  	</Window>
+  </Alloy>
+```
 
 
 | Functions | Description |
@@ -28,35 +54,6 @@ supporting multiple platforms, in addition to the android .
 | `listener(event, callback)` | Assigns event for input , listening to a callback |
 
 --------------------------------------------------------------------------------
-<h3>Usage 
-  <a href="http://gitt.io/component/input-materialdesign">
-    <img src="asset/gittio-usage.png"/> 
-  </a>
-</h3>
-
-<h5>XML</h5>
-```xml
-  <Alloy>
-	  <Window id="win">
-	  	<Widget src="input-materialdesign" id="firstTextField" />
-	  	<Widget src="input-materialdesign" id="secondTextField" />
-  	</Window>
-  </Alloy>
-```
-
-<h5>JS</h5>
-```javascript
-  // On return Key from firstTextField
-$.firstTextField.listener('return', function(e){
-	$.secondTextField.focus();
-});
-
-// On blur Key from secondTextField
-$.secondTextField.listener('blur', function(e){
-	alert('You just Blur secondTextField' );
-});
-
-```
 
 <h3>Regular expression</h3>
 Through the mask attribute is possible to pass a regular expression to filter the field as the same .
