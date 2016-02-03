@@ -1,13 +1,12 @@
-/** @author: Nádson Fernando 
- *  @email: nadsonfernando1@gmail.com 
+/** @author: Nádson Fernando
+ *  @email: nadsonfernando1@gmail.com
  *  @description: controller input
- *  @version: 1.0 
  */
 
-//arguments
-var args = arguments[0] || {};
+'use strict';
 
-//config references this
+var args = arguments[0] || {};
+var _init = {};
 var _config = {
 	color : {
 		pattern : '#aaa',
@@ -15,11 +14,11 @@ var _config = {
 		exceedingColor : "FF0000"
 	},
 	duration : 200,
-	editable: true,
-	exceeding: false
+	editable : true,
+	exceeding : false,
+	up: false
 };
 
-//declare events in object
 var _events = {
 	CLICK : 'click',
 	FOCUS : 'focus',
@@ -27,42 +26,46 @@ var _events = {
 	CHANGE : 'change'
 };
 
-var _animation = {
-	
-	//animation up
-	ANIMATION_UP : function() {
-		if(!_config.editable) 
-			return;
-		
-		var lenHint = _.size($.hint.getText());
-		var color = _config.exceeding ? _config.color.exceeding : _config.color.post;
-		lenHint += lenHint * (Number(lenHint) > 25 ? 0.20 : 0.10);
-		
+var mask = {
+	NUMBER : {
+		type : 'number',
+		exp : /^[0-9]+$/
+	},
+	CUSTOM : {
+		exp : ''
+	}
+};
 
+var _animation = {
+	ANIMATION_UP : function() {
+		if (!_config.editable)
+			return;
+
+		var color = _config.exceeding ? _config.color.exceeding : _config.color.post;
 		$.hint.animate({
 			"top" : 0,
 			"color" : color,
 			"transform" : Ti.UI.create2DMatrix().scale(0.7),
-			"left" : Ti.Platform.osname == "android" ? (-lenHint + 2) : -lenHint, //Fix hint being cut off on Android
+			"left" : Ti.Platform.osname == "android" ? (-configHintSize() + 2) : -configHintSize(), //Fix hint being cut off on Android
 			"duration" : _config.duration
 		});
 
 		$.footer.animate({
 			"backgroundColor" : color,
+			"height" : 2
 		});
+		
+		_config.up = true;
 	},
-	
-	//animation down
+
 	ANIMATION_DOWN : function() {
-		if(!_config.editable) 
+		if (!_config.editable) 
 			return;
-		
-		var lenHint = _.size($.hint.getText());
+
 		var color = _config.exceeding ? _config.color.exceeding : _config.color.pattern;
-		lenHint += lenHint * (Number(lenHint) > 25 ? 0.20 : 0.10);
-		
-		$.footer.animate({
-			"backgroundColor" : color
+		$.footer.animate({ 
+			"backgroundColor" : color,  
+			"height" : 1
 		});
 
 		var attrsHint = {
@@ -76,58 +79,103 @@ var _animation = {
 		if ($.textfield.getValue()) {
 			attrsHint["top"] = 0;
 			attrsHint["transform"] = Ti.UI.create2DMatrix().scale(0.7);
-			attrsHint["left"] = -lenHint;
+			attrsHint["left"] = -configHintSize();
 		}
 		$.hint.animate(attrsHint);
+		
+		_config.up = false;
 	}
 };
 
-//Exports Methods
-exports.getValue = function() {
-	return $.textfield.getValue();
-};
+function resetColorWarning() {
+	_config.exceeding = false;
+	$.footer.backgroundColor = _config.color.pattern;
+	$.counter["color"] = _config.color.pattern;
+	$.hint.color = _config.color.pattern;
+}
 
-exports.ANIMATION_UP = function() {
-	_animation.ANIMATION_UP();
-};
+function minMaxLength(event) {
+	var eventSize = event.value.length;
 
-exports.ANIMATION_DOWN = function() {
-	_animation.ANIMATION_DOWN();
-};
+	if (eventSize == 0 && !_config.up) {
+		$.counter.animate({
+			"right" : -64,
+			"duration" : 350
+		});
+		resetColorWarning();
 
-exports.setValue = function(value, up) {
-	if (up)
-		_animation.ANIMATION_UP();
+		return;
 
-	$.textfield.setValue(value);
-};
+	} else if (eventSize == 1) {
+		$.counter.animate({
+			right : 0,
+			duration : 350
+		});
+	}
+	
+	if (eventSize < _init.minLength || eventSize > _init.maxLength) 
+		exceeding();
+	 else 
+	 	if ($.footer.backgroundColor != _config.color.post) 
+			notExceeding();
+	
 
-exports.listener = function(event, callback) {
-	$.textfield.addEventListener(event, function(e) {
-		callback(e);
-	});
-};
+	$.counter.setText(eventSize + " / " + _init.maxLength);
+}
 
-exports.blur = function( toFocus ){
-	$.textfield.blur();
-};
+function exceeding() {
+	_config.exceeding = true;
 
-exports.focus = function(){
-	$.textfield.focus();
-};
+	$.footer.backgroundColor = _config.color.exceeding;
+	$.counter["color"] = _config.color.exceeding;
+	$.hint.color = _config.color.exceeding;
+}
 
-$.textfield.addEventListener(_events.FOCUS, _animation.ANIMATION_UP);
-$.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
+function notExceeding() {
+	_config.exceeding = false;
+
+	$.footer.backgroundColor = _config.color.post;
+	$.counter["color"] = "#000";
+	$.hint.color = _config.color.post;
+}
+
+function configHintSize() {
+	var sizeHint = _.size($.hint.getText());
+	sizeHint += sizeHint * (Number(sizeHint) > 25 ? 0.20 : 0.10);
+
+	return sizeHint;
+}
+
+function validation(evt) {
+
+	var value = $.textfield.getValue().toString();
+
+	if (_init.toUpperCase)
+		$.textfield.setValue(value.toUpperCase());
+
+	if (_init.mask) {
+
+		if (_init.mask == mask.NUMBER.type)
+			$.textfield.setValue(regExp(value, mask.NUMBER.exp));
+		else
+			$.textfield.setValue(regExp(value, mask.CUSTOM.exp));
+	}
+}
+
+function regExp(value, regExp) {
+	var expression = value.match(regExp);
+	return expression ? expression.toString() : "";
+}
 
 (function() {
 
 	_config.color.post = args.colorFocus || _config.color.post;
 	_config.color.pattern = args.colorPattern || _config.color.pattern;
-	_config.color.exceeding = args.exceedingColor || "#FF0000"; //red
-	
+	_config.color.exceeding = args.exceedingColor || "#FF0000";
+
 	_config.duration = args.animationDuration || _config.duration;
 
-	var _init = {
+	_init = {
 		titleHint : args.titleHint,
 		width : args.width,
 		top : args.top,
@@ -135,15 +183,18 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 		right : args.right,
 		bottom : args.bottom,
 		colorFont : args.colorFont,
-		keyboardType: args.keyboardType,
-		returnKey: args.returnKey,
-		password: args.password,
-		editable: args.editable,
-		maxLength: args.maxLength,
-		minLength: args.minLength
+		keyboardType : args.keyboardType,
+		returnKey : args.returnKey,
+		password : args.password,
+		editable : args.editable,
+		maxLength : args.maxLength,
+		minLength : args.minLength,
+		toUpperCase : args.toUpperCase,
+		mask : args.mask,
+		required : args.required || false
 	};
-	
-	if(typeof _init.editable == "string")
+
+	if ( typeof _init.editable == "string")
 		_init.editable = eval(_init.editable);
 
 	if (!_init.titleHint)
@@ -170,81 +221,87 @@ $.textfield.addEventListener(_events.BLUR, _animation.ANIMATION_DOWN);
 	if (_init.colorFont)
 		$.textfield.setColor(_init.colorFont);
 
-	if(_init.keyboardType)
+	if (_init.keyboardType)
 		$.textfield.setKeyboardType(_init.keyboardType);
 
-	if(_init.returnKey)
+	if (_init.returnKey)
 		$.textfield.setReturnKeyType(_init.returnKey);
 
-	if(_init.password)
+	if (_init.password)
 		$.textfield.setPasswordMask(_init.password);
+
+	if (_init.mask != mask.NUMBER.type)
+		mask.CUSTOM.exp = eval(_init.mask);
 
 	$.hint.setText(_init.titleHint);
 	$.hint.setColor(_config.color.pattern);
 	$.footer.setBackgroundColor(_config.color.pattern);
-	
-	if(_init.editable == false) {
+
+	if (_init.editable == false) {
 		$.container.setOpacity(0.3);
 		$.textfield.setEditable(false);
-		
+
 		_config.editable = false;
 	}
-	
-	if(_init.maxLength > 0) {
-		//Create counter label
-		var counter = Ti.UI.createLabel({
-			"height": 15,
-			"width": 64,
-			"font": {
-				fontSize: 11
-			},
-			"opacity": 0.7,
-			"right": -64, //Stay out of the screen on init, will animate in upon change event
-			"textAlign": "right",
-			"bottom": 0
-		});
-		$.container.add(counter);
-		
-		//Add on change event listener
-		$.textfield.addEventListener(_events.CHANGE, function(event){
-			var length = event.value.length;
-			
-			//Animate check
-			if(length == 0) {
-				counter.animate({
-					"right":-64, 
-					"duration":350
-				}); //Animate out
-				return;
-				
-			} else if(length == 1) {
-				counter.animate({
-					right:0, 
-					duration:350
-				}); //Animate in
+
+	$.textfield.addEventListener(_events.FOCUS, _animation.ANIMATION_UP);
+	$.textfield.addEventListener(_events.CHANGE, function(event) {
+		validation(event);
+
+		if (_init.required) {
+			if ($.textfield.getValue()) {
+				notExceeding();
+				$.required.setText("");
 			}
-			//Check minLength value or maxLength value
-			if(length < _init.minLength || length > _init.maxLength){
-				//Set flag for next focus / blur event
-				_config.exceeding = true;
-				
-				//Set exceeding color
-				$.footer.backgroundColor = _config.color.exceeding;
-				counter["color"] = _config.color.exceeding;
-				$.hint.color = _config.color.exceeding;
-				
-			}else if($.footer.backgroundColor != _config.color.post){
-				//Set flag for next focus / blur event
-				_config.exceeding = false;
-				
-				//Reset to color back to normal1			
-				$.footer.backgroundColor = _config.color.post;
-				counter["color"] = "#000";
-				$.hint.color = _config.color.post;
+		}
+
+		if (_init.maxLength)
+			minMaxLength(event);
+	});
+	$.textfield.addEventListener(_events.BLUR, function(event) {
+		_animation.ANIMATION_DOWN(event);
+
+		if (_init.maxLength)
+			minMaxLength(event);
+
+		if (_init.required) {
+			if (!$.textfield.getValue()) {
+				exceeding();
+				$.required.setText(_init.required);
 			}
-			
-			//Update label
-			counter.setText(length + " / " + _init.maxLength);
-		});
-	}
+		}
+	});
 })();
+
+exports.getValue = function() {
+	return $.textfield.getValue();
+};
+
+exports.ANIMATION_UP = function() {
+	_animation.ANIMATION_UP();
+};
+
+exports.ANIMATION_DOWN = function() {
+	_animation.ANIMATION_DOWN();
+};
+
+exports.setValue = function(value, up) {
+	if (up)
+		_animation.ANIMATION_UP();
+
+	$.textfield.setValue(value);
+};
+
+exports.listener = function(event, callback) {
+	$.textfield.addEventListener(event, function(e) {
+		callback(e);
+	});
+};
+
+exports.blur = function(toFocus) {
+	$.textfield.blur();
+};
+
+exports.focus = function() {
+	$.textfield.focus();
+};

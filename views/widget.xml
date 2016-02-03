@@ -3,5 +3,7 @@
 		<Label id="hint"/>
 		<TextField id="textfield"/>
 		<View id="footer"/>
+		<Label id="counter"/>
+		<Label id="required"/>
 	</View>
 </Alloy>
