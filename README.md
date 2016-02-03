@@ -1,120 +1,91 @@
 # input-materialdesign-widget
 Appcelerator Text Field concept Material Design!
 
+This is a widget based on the concept design material, 
+supporting multiple platforms, in addition to the android .
+
 <h2>Installation</h2>
 <pre> <i>$ gittio install input-materialdesign@version</i></pre>
 
-<h2>Example</h2>
-<img src="asset/example-input.gif"/>
+<h5>Simple examples</h5>
 
-<p>Example for number of characters.<p>
-<img src="asset/androidl.png"/>
+<img src="asset/gif_simple.gif"/>
 
-<b><h3>Functions</h3></b>
+<h5>Example with required field</h5>
+<img src="asset/gif_required.gif"/>
 
-  - <h5>getValue()</h5>
-  	<i>returns the value of input.</i>
-  	<br>
-  	<pre>
-  	$.textfield.getValue();
-  	</pre>
-  	
-  - <h5>setValue(paran)</h5>
-  	<i>assigns value to input.</i>
-  	<br>
-  	<pre>
-  	$.textfield.setValue(23);
-  	</pre> 
-  
-  - <h5>setEditable(boolean)</h5>
-  	<i>The input block.</i>
-  	<br>
-  	<pre>
-  	$.textfield.setEditable(true);
-  	</pre>
-  	
-  - <h5>ANIMATION_UP()</h5>
-  	<i>animation rise.</i>
-  	<br>
-  	<pre>
-  	$.textfield.ANIMATION_UP();
-  	</pre> 	
-  	
-  - <h5>ANIMATION_DOWN()</h5>
-  	<i>animation descent.</i>
-  	<br>
-  	<pre>
-  	$.textfield.ANIMATION_DOWN();	
-  	</pre> 	
-  
-- <h5>listener(event, callback)</h5>
-  <i>assigns event for input , listening to a callback.</i>
-  <br>
-  <pre>
-  
-  $.textfield.listener('focus', function() {
-  	Ti.API.info("even focus");
-  });
-  </pre>
+<h5>Example with limited field of information per character</h5>
+<img src="asset/gif_max.gif"/>
 
-- <h5>Expose Focus & Blur Method</h5>
-<pre>
-$.textfield.focus();
-$.textfield.blur();
-</pre>
+
+| Functions | Description |
+--- | --- |
+| `getValue` | Returns the value of input |
+| `setValue` | Assigns value to input |
+| `setEditable` | The input block |
+| `ANIMATION_UP` | Animation rise |
+| `ANIMATION_DOWN` | Animation descent |
+| `listener(event, callback)` | Assigns event for input , listening to a callback |
 
 --------------------------------------------------------------------------------
+<h3>Usage 
+  <a href="http://gitt.io/component/input-materialdesign">
+    <img src="asset/gittio-usage.png"/> 
+  </a>
+</h3>
 
-<h3>Attributes</h3>
+<h5>XML</h5>
+```xml
+  <Alloy>
+	  <Window id="win">
+	  	<Widget src="input-materialdesign" id="firstTextField" />
+	  	<Widget src="input-materialdesign" id="secondTextField" />
+  	</Window>
+  </Alloy>
+```
 
-<pre> <b>- animationDuration: Number</b> 
-       duration animation.</pre>
+<h5>JS</h5>
+```javascript
+  // On return Key from firstTextField
+$.firstTextField.listener('return', function(e){
+	$.secondTextField.focus();
+});
 
-<pre> <b>- width: String, Number</b> 
-       sets the width.</pre>
+// On blur Key from secondTextField
+$.secondTextField.listener('blur', function(e){
+	alert('You just Blur secondTextField' );
+});
 
- <pre> <b>- colorFocus: String</b> 
-       sets the color when the focused field.</pre>
-      
-  <pre> <b>- colorPattern: String</b> 
-      sets the standard color when the field started.</pre>
-  
-  <pre> <b>- colorFont: String</b> 
-      sets the font color.</pre>
-  
-  <pre> <b>- titleHint: String</b> 
-      sets title.</pre>
-  
-  <pre> <b>- top: String, Number</b> 
-      defines the top.</pre>
-  
-  <pre> <b>- bottom: String, Number</b> 
-      defines the bottom.</pre>
+```
 
-  <pre> <b>- left: String, Number</b> 
-      defines the left.</pre>
-  
-  <pre> <b>- right: String, Number</b> 
-      defines the right.</pre>
-      
-  <pre> <b>- keyboardType: String </b>
-  	  define the keyboardType.</pre>
-  
-  <pre> <b>- returnKey: String </b>
-  	  define the returnKey from keyboard.</pre>
+<h3>Regular expression</h3>
+Through the mask attribute is possible to pass a regular expression to filter the field as the same .
 
-  <pre> <b>- password: Boolean </b>
-  	  define if TextField should have passwordMask.</pre>
-  
-  <pre> <b>- editable: Boolean </b>
-  	  defines whether the input starts blocked.</pre>	 
-  
-  <pre> <b>- maxLength: Number </b>
-  	  Defines the maximum number of characters.</pre>		  
-  
-   <pre> <b>- minLength: Number </b>
-  	  Defines the minimum number of characters.</pre>		 
-  	 
-  <pre> <b>- exceedingColor: String </b>
-  	  Set the color when it exceeds the reported number of characters.</pre>	  
-  
+Example: 
+```xml
+<Widget src="input-materialdesign" mask="/^[0-9]+$/"/>
+```
+
+| Attributes | type | Description |
+--- | --- | --- |
+| `animationDuration` | Number | Duration animation |
+| `width` | String, Number | Sets the width |
+| `colorFocus` | String | Sets the color when the focused field |
+| `colorPattern` | String | Sets the standard color when the field started |
+| `colorFont` | String | Sets the font color |
+| `titleHint` | String | Sets title |
+| `top` | String, Number | Defines the top |
+| `bottom` | String, Number | Defines the bottom |
+| `left` | String, Number | Defines the left |
+| `right` | String, Number | Defines the right |
+| `keyboardType` | String | Defines the keyboardType |
+| `returnKey` | String | Defines the returnKey from keyboard |
+| `password` | String | Defines if TextField should have passwordMask |
+| `editable` | Boolean | Defines whether the input starts blocked |
+| `maxLength` | Number | Defines the maximum number of characters |
+| `minLength` | Number | Defines the minimum number of characters |
+| `exceedingColor` | String | Set the color when it exceeds the reported number of characters |
+| `toUpperCase` | Boolean | Sets the field to get me high box |
+| `mask` | String | Defines whether some shade to the field, as there is no default , but can be defined as numeric, accepting only numbers, or you can spend a regular expression whatsoever. |
+| `required` | String | Defines whether the field is required , passing a message as parameter |
+
