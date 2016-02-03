@@ -1,6 +1,0 @@
-<Alloy>
-	<Window id="win">
-		<Widget src="input-materialdesign" id="firstTextField" />
-		<Widget src="input-materialdesign" id="secondTextField" />
-	</Window>
-</Alloy>
