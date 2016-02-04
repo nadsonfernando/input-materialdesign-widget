@@ -18,7 +18,7 @@ supporting multiple platforms, in addition to the android .
 ```xml
   <Alloy>
 	 <Window id="win">
-	  	<Widget src="input-materialdesign"/>
+	  	<Widget src="input-materialdesign" titleHint="Adress"/>
   	</Window>
   </Alloy>
 ```
@@ -28,7 +28,7 @@ supporting multiple platforms, in addition to the android .
 ```xml
   <Alloy>
 	 <Window id="win">
-	  	<Widget src="input-materialdesign" required="Required Field"/>
+	  	<Widget src="input-materialdesign" required="Required Field" titleHint="Adress"/>
   	</Window>
   </Alloy>
 ```
@@ -38,7 +38,7 @@ supporting multiple platforms, in addition to the android .
 ```xml
   <Alloy>
 	 <Window id="win">
-	  	<Widget src="input-materialdesign" maxLength="10"/>
+	  	<Widget src="input-materialdesign" maxLength="10" titleHint="Complement"/>
   	</Window>
   </Alloy>
 ```
