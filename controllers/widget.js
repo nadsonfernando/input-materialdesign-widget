@@ -94,7 +94,7 @@ function resetColorWarning() {
 	$.hint.color = _config.color.pattern;
 }
 
-function minMaxLength(event) {
+function minMaxLength(event, footerText) {
 	var eventSize = event.value.length;
 
 	if (eventSize == 0 && !_config.up) {
@@ -112,15 +112,22 @@ function minMaxLength(event) {
 			duration : 350
 		});
 	}
-	
 	if (eventSize < _init.minLength || eventSize > _init.maxLength) 
-		exceeding();
+		{
+			footerText.setText(_init.footerText);
+			exceeding();
+		}
 	 else 
-	 	if ($.footer.backgroundColor != _config.color.post) 
+	 	if ($.footer.backgroundColor != _config.color.post)
+	 	{
+	 		footerText.setText("");
 			notExceeding();
+	 	}
 	
-
-	$.counter.setText(eventSize + " / " + _init.maxLength);
+	if (_init.maxLength)
+		$.counter.setText(eventSize + " / " + _init.maxLength);
+	else
+		$.counter.setText(eventSize + " / " + _init.minLength);
 }
 
 function exceeding() {
@@ -176,6 +183,7 @@ function regExp(value, regExp) {
 	_config.duration = args.animationDuration || _config.duration;
 
 	_init = {
+		footerText: args.footerText,
 		titleHint : args.titleHint,
 		width : args.width,
 		top : args.top,
@@ -255,14 +263,16 @@ function regExp(value, regExp) {
 			}
 		}
 
-		if (_init.maxLength)
-			minMaxLength(event);
+		if (_init.maxLength || _init.minLength)
+			minMaxLength(event, $.required);
 	});
 	$.textfield.addEventListener(_events.BLUR, function(event) {
 		_animation.ANIMATION_DOWN(event);
 
-		if (_init.maxLength)
-			minMaxLength(event);
+		if (_init.maxLength || _init.minLength)
+			{
+				minMaxLength(event, $.required);
+			}
 
 		if (_init.required) {
 			if (!$.textfield.getValue()) {
