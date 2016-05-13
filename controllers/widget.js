@@ -11,12 +11,12 @@ var _config = {
 	color : {
 		pattern : '#aaa',
 		post : '#208FE5',
-		exceedingColor : "FF0000"
+		exceedingColor : "#FF0000"
 	},
 	duration : 200,
 	editable : true,
 	exceeding : false,
-	up: false
+	up : false
 };
 
 var _events = {
@@ -42,30 +42,36 @@ var _animation = {
 			return;
 
 		var color = _config.exceeding ? _config.color.exceeding : _config.color.post;
-		$.hint.animate({
-			"top" : 0,
-			"color" : color,
-			"transform" : Ti.UI.create2DMatrix().scale(0.7),
-			"left" : Ti.Platform.osname == "android" ? (-configHintSize() + 2) : -configHintSize(), //Fix hint being cut off on Android
-			"duration" : _config.duration
+
+		_.defer(function() {
+			$.footer.animate({
+				"backgroundColor" : color,
+				"height" : 2
+			});
 		});
 
-		$.footer.animate({
-			"backgroundColor" : color,
-			"height" : 2
+		_.defer(function() {
+			$.hint.animate({
+				"top" : 0,
+				"color" : color,
+				"transform" : Ti.UI.create2DMatrix().scale(0.7),
+				"left" : Ti.Platform.osname == "android" ? (-configHintSize() + 2) : -configHintSize(), //Fix hint being cut off on Android
+				"duration" : _config.duration
+			});
 		});
-		
 		_config.up = true;
 	},
 
 	ANIMATION_DOWN : function() {
-		if (!_config.editable) 
+		if (!_config.editable)
 			return;
 
 		var color = _config.exceeding ? _config.color.exceeding : _config.color.pattern;
-		$.footer.animate({ 
-			"backgroundColor" : color,  
-			"height" : 1
+		_.defer(function() {
+			$.footer.animate({
+				"backgroundColor" : color,
+				"height" : 1
+			});
 		});
 
 		var attrsHint = {
@@ -82,7 +88,7 @@ var _animation = {
 			attrsHint["left"] = -configHintSize();
 		}
 		$.hint.animate(attrsHint);
-		
+
 		_config.up = false;
 	}
 };
@@ -94,7 +100,7 @@ function resetColorWarning() {
 	$.hint.color = _config.color.pattern;
 }
 
-function minMaxLength(event, footerText) {
+function minMaxLength(event) {
 	var eventSize = event.value.length;
 
 	if (eventSize == 0 && !_config.up) {
@@ -112,22 +118,13 @@ function minMaxLength(event, footerText) {
 			duration : 350
 		});
 	}
-	if (eventSize < _init.minLength || eventSize > _init.maxLength) 
-		{
-			footerText.setText(_init.footerText);
-			exceeding();
-		}
-	 else 
-	 	if ($.footer.backgroundColor != _config.color.post)
-	 	{
-	 		footerText.setText("");
-			notExceeding();
-	 	}
-	
-	if (_init.maxLength)
-		$.counter.setText(eventSize + " / " + _init.maxLength);
-	else
-		$.counter.setText(eventSize + " / " + _init.minLength);
+
+	if (eventSize < _init.minLength || eventSize > _init.maxLength)
+		exceeding();
+	else if ($.footer.backgroundColor != _config.color.post)
+		notExceeding();
+
+	$.counter.setText(eventSize + " / " + _init.maxLength);
 }
 
 function exceeding() {
@@ -174,84 +171,108 @@ function regExp(value, regExp) {
 	return expression ? expression.toString() : "";
 }
 
-(function() {
+/**
+ * apply properties to widget
+ * @param {Object} properties
+ */
+function applyProperties(properties) {
+	if (_.isObject(properties)) {
+		if (_.has(properties, 'colorFocus')) {
+			_config.color.post = properties.colorFocus;
+		}
+		if (_.has(properties, 'colorPattern')) {
+			_config.color.pattern = properties.colorPattern;
+		}
 
-	_config.color.post = args.colorFocus || _config.color.post;
-	_config.color.pattern = args.colorPattern || _config.color.pattern;
-	_config.color.exceeding = args.exceedingColor || "#FF0000";
+		if (_.has(properties, 'exceedingColor')) {
+			_config.color.exceeding = properties.exceedingColor;
+		}
 
-	_config.duration = args.animationDuration || _config.duration;
+		if (_.has(properties, 'animationDuration')) {
+			config.duration = properties.animationDuration;
+		}
 
-	_init = {
-		footerText: args.footerText,
-		titleHint : args.titleHint,
-		width : args.width,
-		top : args.top,
-		left : args.left,
-		right : args.right,
-		bottom : args.bottom,
-		colorFont : args.colorFont,
-		keyboardType : args.keyboardType,
-		returnKey : args.returnKey,
-		password : args.password,
-		editable : args.editable,
-		maxLength : args.maxLength,
-		minLength : args.minLength,
-		toUpperCase : args.toUpperCase,
-		mask : args.mask,
-		required : args.required || false
-	};
+		_init = {
+			titleHint : properties.titleHint,
+			width : properties.width,
+			top : properties.top,
+			left : properties.left,
+			right : properties.right,
+			bottom : properties.bottom,
+			colorFont : properties.colorFont,
+			keyboardType : properties.keyboardType,
+			returnKey : properties.returnKey,
+			password : properties.password,
+			editable : properties.editable,
+			maxLength : properties.maxLength,
+			minLength : properties.minLength,
+			toUpperCase : properties.toUpperCase,
+			mask : properties.mask,
+			required : false
+		};
 
-	if ( typeof _init.editable == "string")
-		_init.editable = eval(_init.editable);
+		if (_.has(properties, 'required')) {
+			_init.required = properties.required;
+		}
 
-	if (!_init.titleHint)
-		$.hint.setVisible(false);
+		if ( typeof _init.editable == "string")
+			_init.editable = eval(_init.editable);
 
-	/**
-	 * attrs element {id} container
-	 */
-	if (_init.width)
-		$.container.setWidth(_init.width);
+		if (_.has(properties, 'titleHintVisible')) {
+			$.hint.setVisible(properties.titleHintVisible);
+		}
 
-	if (_init.top)
-		$.container.setTop(_init.top);
+		/**
+		 * attrs element {id} container
+		 */
+		if (_init.width)
+			$.container.setWidth(_init.width);
 
-	if (_init.bottom)
-		$.container.setBottom(_init.bottom);
+		if (_init.top)
+			$.container.setTop(_init.top);
 
-	if (_init.left)
-		$.container.setLeft(_init.left);
+		if (_init.bottom)
+			$.container.setBottom(_init.bottom);
 
-	if (_init.right)
-		$.container.setRight(_init.right);
+		if (_init.left)
+			$.container.setLeft(_init.left);
 
-	if (_init.colorFont)
-		$.textfield.setColor(_init.colorFont);
+		if (_init.right)
+			$.container.setRight(_init.right);
 
-	if (_init.keyboardType)
-		$.textfield.setKeyboardType(_init.keyboardType);
+		if (_init.colorFont)
+			$.textfield.setColor(_init.colorFont);
 
-	if (_init.returnKey)
-		$.textfield.setReturnKeyType(_init.returnKey);
+		if (_init.keyboardType)
+			$.textfield.setKeyboardType(_init.keyboardType);
 
-	if (_init.password)
-		$.textfield.setPasswordMask(_init.password);
+		if (_init.returnKey)
+			$.textfield.setReturnKeyType(_init.returnKey);
 
-	if (_init.mask != mask.NUMBER.type)
-		mask.CUSTOM.exp = eval(_init.mask);
+		if (_init.password)
+			$.textfield.setPasswordMask(_init.password);
 
-	$.hint.setText(_init.titleHint);
-	$.hint.setColor(_config.color.pattern);
-	$.footer.setBackgroundColor(_config.color.pattern);
+		if (_init.mask != mask.NUMBER.type)
+			mask.CUSTOM.exp = eval(_init.mask);
 
-	if (_init.editable == false) {
-		$.container.setOpacity(0.3);
-		$.textfield.setEditable(false);
+		if (_.has(properties, 'titleHint')) {
+			$.hint.setText(properties.titleHint);
+		}
 
-		_config.editable = false;
+		$.hint.setColor(_config.color.pattern);
+		$.footer.setBackgroundColor(_config.color.pattern);
+
+		if (_init.editable == false) {
+			$.container.setOpacity(0.3);
+			$.textfield.setEditable(false);
+
+			_config.editable = false;
+		}
 	}
+};
 
+(function() {
+	applyProperties(args);
 	$.textfield.addEventListener(_events.FOCUS, _animation.ANIMATION_UP);
 	$.textfield.addEventListener(_events.CHANGE, function(event) {
 		validation(event);
@@ -263,16 +284,14 @@ function regExp(value, regExp) {
 			}
 		}
 
-		if (_init.maxLength || _init.minLength)
-			minMaxLength(event, $.required);
+		if (_init.maxLength)
+			minMaxLength(event);
 	});
 	$.textfield.addEventListener(_events.BLUR, function(event) {
 		_animation.ANIMATION_DOWN(event);
 
-		if (_init.maxLength || _init.minLength)
-			{
-				minMaxLength(event, $.required);
-			}
+		if (_init.maxLength)
+			minMaxLength(event);
 
 		if (_init.required) {
 			if (!$.textfield.getValue()) {
@@ -315,3 +334,5 @@ exports.blur = function(toFocus) {
 exports.focus = function() {
 	$.textfield.focus();
 };
+
+exports.applyProperties = applyProperties;
