@@ -1,48 +1,66 @@
 # input-materialdesign-widget
-Appcelerator Text Field concept Material Design!
+[![Gittio](asset/gittio-usage.png)](http://gitt.io/component/input-materialdesign)
 
-This is a widget based on the concept design material, 
-supporting multiple platforms, in addition to the android .
+Appcelerator TextField Material Design concept!
 
-<h2>Installation</h2>
-<pre> <i>$ gittio install input-materialdesign@version</i></pre>
+This is a widget based on [Material Design](https://material.io/guidelines/) concept, supporting multiple platforms, even android.
 
-<h3>Usage 
-  <a href="http://gitt.io/component/input-materialdesign">
-    <img src="asset/gittio-usage.png"/> 
-  </a>
-</h3>
 
-<h5>Simple examples</h5>
+## Installation
+
+Use [Gittio](http://gitt.io/) to install:
+
+```sh
+$ gittio install input-materialdesign@version
+```
+
+## Examples
+
+#### Simple input
+
 <img src="asset/gif_simple.gif"/>
+
 ```xml
-  <Alloy>
-	 <Window id="win">
-	  	<Widget src="input-materialdesign" titleHint="Address"/>
-  	</Window>
-  </Alloy>
+<Alloy>
+    <Window id="win">
+        <Widget src="input-materialdesign" titleHint="Address"/>
+    </Window>
+</Alloy>
 ```
 
-<h5>Example with required field</h5>
+#### Input with required fields
+
 <img src="asset/gif_required.gif"/>
-```xml
-  <Alloy>
-	 <Window id="win">
-	  	<Widget src="input-materialdesign" required="Required Field" titleHint="Address"/>
-  	</Window>
-  </Alloy>
+
+```xml 
+<Alloy>
+    <Window id="win">
+        <Widget src="input-materialdesign" required="Required Field" titleHint="Address"/>
+    </Window>
+</Alloy>
 ```
 
-<h5>Example with limited field of information per character</h5>
-<img src="asset/gif_max.gif"/>
+#### Input with maxLength
+
+<img src="asset/gif_max.gif"/> 
+
 ```xml
-  <Alloy>
-	 <Window id="win">
-	  	<Widget src="input-materialdesign" maxLength="10" titleHint="Complement"/>
-  	</Window>
-  </Alloy>
+<Alloy>
+    <Window id="win">
+        <Widget src="input-materialdesign" maxLength="10" titleHint="Complement"/>
+    </Window>
+</Alloy>
 ```
 
+#### Input with Mask
+Through the mask attribute is possible to pass a regular expression to filter the field as the same .
+
+```xml
+<Widget src="input-materialdesign" mask="/^[0-9]+$/"/>
+```
+
+## Methods
+There are the methods available to access from `.js` files.
 
 | Functions | Description |
 --- | --- |
@@ -53,15 +71,10 @@ supporting multiple platforms, in addition to the android .
 | `ANIMATION_DOWN` | Animation descent |
 | `listener(event, callback)` | Assigns event for input , listening to a callback |
 
---------------------------------------------------------------------------------
 
-<h3>Regular expression</h3>
-Through the mask attribute is possible to pass a regular expression to filter the field as the same .
+## Attributes
 
-Example: 
-```xml
-<Widget src="input-materialdesign" mask="/^[0-9]+$/"/>
-```
+There are all attributes supporting by this widget.
 
 | Attributes | type | Description |
 --- | --- | --- |
@@ -85,4 +98,3 @@ Example:
 | `toUpperCase` | Boolean | Sets the field to get me high box |
 | `mask` | String | Defines whether some shade to the field, as there is no default , but can be defined as numeric, accepting only numbers, or you can spend a regular expression whatsoever. |
 | `required` | String | Defines whether the field is required , passing a message as parameter |
-
