@@ -23,8 +23,8 @@ $ gittio install input-materialdesign@version
 ```xml
 <Alloy>
     <Window id="win">
-	    <Widget src="input-materialdesign" titleHint="Address"/>
-	</Window>
+        <Widget src="input-materialdesign" titleHint="Address"/>
+    </Window>
 </Alloy>
 ```
 
@@ -34,9 +34,9 @@ $ gittio install input-materialdesign@version
 
 ```xml 
 <Alloy>
-	<Window id="win">
-		<Widget src="input-materialdesign" required="Required Field" titleHint="Address"/>
-	</Window>
+    <Window id="win">
+        <Widget src="input-materialdesign" required="Required Field" titleHint="Address"/>
+    </Window>
 </Alloy>
 ```
 
@@ -46,9 +46,9 @@ $ gittio install input-materialdesign@version
 
 ```xml
 <Alloy>
-	<Window id="win">
-		<Widget src="input-materialdesign" maxLength="10" titleHint="Complement"/>
-	</Window>
+    <Window id="win">
+        <Widget src="input-materialdesign" maxLength="10" titleHint="Complement"/>
+    </Window>
 </Alloy>
 ```
 
