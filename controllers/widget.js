@@ -17,6 +17,7 @@ exports.focus = focus;
 exports.clickIconAction = clickIconAction;
 exports.setPasswordMask = setPasswordMask;
 exports.setIconAction = setIconAction;
+exports.setEditable = setEditable;
 
 function _getController(controller) {
 	return Widget.createController(controller);
@@ -142,6 +143,9 @@ function changeMask(event) {
 	var source = event.source;
 	var regExp;
 	var messageDefault = '';
+	
+	if(_.isUndefined($.args.maskType))
+		return;
 
 	if ($.args.maskTypeOverride) {
 		source.value = source.value.replace($.args.maskTypeOverride, '');
@@ -241,6 +245,8 @@ function contructorElement() {
 	$.hint.setColor(_configuration.color.default);
 	$.footer.setBackgroundColor(_configuration.color.default);
 	$.iconAction.setColor(_configuration.color.default);
+	
+	_configuration.control.isEditable = _configuration.editable || _configuration.control.isEditable;
 
 	if (!castBooleanForce(_configuration.control.isEditable)) {
 		$.container.setOpacity(0.3);
@@ -285,13 +291,16 @@ function postionOverrideFooterAnimation() {
 function getValue() {
 	return $.textfield.getValue();
 }
-
 function setValue(value, uping) {
 	if (uping)
 		_upInteraction();
 	$.textfield.setValue(value);
 }
-
+function setEditable(value) {
+	_PROPERTIES.set("control.isEditable", value, true);
+	$.container.setOpacity(1);
+	$.textfield.setEditable(value);
+}
 function listener(event, callback) {
 	$.textfield.addEventListener(event, function(e) {
 		callback(e);
@@ -309,11 +318,9 @@ function clickIconAction(_callbackIconAction) {
 
 	_EVENTSINTERACTION.listener($.iconAction, _EVENTS.CLICK, _callbackIconAction);
 }
-
 function setPasswordMask(value) {
 	$.textfield.setPasswordMask(value);
 }
-
 function setIconAction(value) {
 	$.iconAction.setText(value);
 }

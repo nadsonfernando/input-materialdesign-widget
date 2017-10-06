@@ -28,7 +28,6 @@ function apply(properties) {
 		'maxLength', 
 		'minLength', 
 		'toUpperCase', 
-		'mask', 
 		'required', 
 		'colorFocus', 
 		'colorDefault', 
