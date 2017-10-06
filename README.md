@@ -53,6 +53,7 @@ Input with character counter, the maximum number of characters is set, when the 
 When a field is orbit.
 
 <img src="assets/08.gif"/> 
+
 ```tss
 "#textfieldTest": {
     required: "Required field"
