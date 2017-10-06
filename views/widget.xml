@@ -2,8 +2,11 @@
 	<View id="container">
 		<Label id="hint"/>
 		<TextField id="textfield"/>
-		<View id="footer"/>
+		<View id="containerFooter">
+			<View id="footer"/>
+		</View>
 		<Label id="counter"/>
 		<Label id="required"/>
+		<Label id="iconAction"/>
 	</View>
 </Alloy>

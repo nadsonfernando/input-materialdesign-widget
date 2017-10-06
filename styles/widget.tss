@@ -1,89 +1,73 @@
-/** @author: Nádson Fernando 
- *  @email: nadsonfernando1@gmail.com 
- *  @description: style input
- */
-
-/**
- * id container input
- */
+/** @author: Nádson Fernando / @email: nadsonfernando1@gmail.com */
 "#container": {
-	width: 			'90%',
-	height: 		72 //@see https://material-design.storage.googleapis.com/publish/material_v_4/material_ext_publish/0Bx4BSt6jniD7V1hoemJNQk5UQlU/components_textfields_labels5.png
+	width: '90%',
+	height: 72 //@see https://material-design.storage.googleapis.com/publish/material_v_4/material_ext_publish/0Bx4BSt6jniD7V1hoemJNQk5UQlU/components_textfields_labels5.png
 },
-
 "#container[platform=android]": {
 	windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_STATE_HIDDEN//Stops auto focus on textfield
 },
-
-/**
- * id Textfield - input
- */
 "#textfield": {
-	width: 			'99%',
-	height: 		28,
-	top:			23,
+	width: '99%',
+	height: 28,
+	top: 23,
 	font: {
-		fontSize: 	16
+		fontSize: 16
 	},
-	color: 			'#444'
+	color: '#444'
 },
-
 "#textfield[platform=android]": {
-	height: 		37,
-	top:			23,
+	height: 37,
+	top: 23,
 	backgroundColor: 'transparent'//Removes the highlight border in Android
 },
-
-/**
- * 	id hint
- * 	placeholder to animate
- */
 "#hint": {
-	height: 		28,
-	top: 			23,
+	height: 28,
+	top: 23,
 	font: {
-		fontSize: 	16
+		fontSize: 16
 	},
-	opacity: 		0.7,
-	left: 			0
+	opacity: 0.7,
+	left: 0
 },
-
-/**
- * 	id footer
- */
+"#containerFooter": {
+	width: '100%',
+	height: Titanium.UI.SIZE,
+	bottom: 15,
+	backgroundColor: '#F4F4F4'
+},
 "#footer": {
-	width: 			'100%',
-	height: 		1,
-	bottom: 		15
+	width: '100%', 
+	height: 1
 },
-
-/**
- *couter
- */
 "#counter": {
-	height: 		15,
-	width: 			64,
+	height: 15,
+	width: 64,
 	font: {
-		fontSize: 	11
+		fontSize: 11
 	},
-	opacity: 		0.7,
-	right: 			-64, //Stay out of the screen on init, will animate in upon change event
-	textAlign: 		"right",
-	bottom: 		0
+	opacity: 0.7,
+	right: -64, //Stay out of the screen on init, will animate in upon change event
+	textAlign: "right",
+	bottom: 0
 },
-
-/**
- *required
- */
 "#required": {
-	height: 		15,
-	width: 			'60%',
+	height: 15,
+	width: '60%',
 	font: {
-		fontSize: 	10
+		fontSize: 10
 	},
-	left: 			0, 
-	textAlign: 		"left",
-	bottom: 		0,
+	left: 0,
+	textAlign: "left",
+	bottom: 0,
 	color: 'red',
-	fontWeigth: 'bold'
+	fontWeigth: 'bold' 
+},
+"#iconAction": {
+	width: 30,
+	height: 30,
+	right: 0,
+	font: {
+		fontSize: 14,
+		fontFamily: 'FontAwesome'
+	}
 }
