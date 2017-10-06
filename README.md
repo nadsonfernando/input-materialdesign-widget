@@ -58,7 +58,7 @@ When a field is orbit.
 "#textfieldTest": {
     required: "Required field"
 }
-```tss
+```
 
 ### Input with validation email and number
 It is possible to validate if the field typed is an email or a valid number through the 'maskType' attribute (email, number).
