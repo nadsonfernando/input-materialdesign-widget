@@ -14,49 +14,144 @@ Use [Gittio](http://gitt.io/) to install:
 $ gittio install input-materialdesign@version
 ```
 
-## Examples
+## Usage
+
+It is quite simple to create a widget, just declare your widget in the xml, with only a property called 'titleHint' and is ready to use. You choose to collocate the attributes either in the 'xml' file in question or in the 'tss' file (recommended) to maintain a cohesion and responsibility for each layer. 
+
+This component is well decoupled, being able to stylize and interact with it
+Below you will see some examples.
 
 #### Simple input
 
-<img src="asset/gif_simple.gif"/>
+<img src="assets/01.gif"/>
 
 ```xml
-<Alloy>
-    <Window id="win">
-        <Widget src="input-materialdesign" titleHint="Address"/>
-    </Window>
-</Alloy>
+<Widget src="input-materialdesign" id="textfieldTest"/>
+```
+```tss
+"#textfieldTest": {
+    titleHint: "Username"
+}
 ```
 
-#### Input with required fields
 
-<img src="asset/gif_required.gif"/>
+#### Input with character counter
+Input with character counter, the maximum number of characters is set, when the component exceeds, the component shows an error notification.
+
+<img src="asset/02.gif"/>
 
 ```xml 
-<Alloy>
-    <Window id="win">
-        <Widget src="input-materialdesign" required="Required Field" titleHint="Address"/>
-    </Window>
-</Alloy>
+<Widget src="input-materialdesign" id="textfieldTest" />
+```
+```tss
+"#textfieldTest": {
+    titleHint: "Username",
+    maxLength: 10
+}
 ```
 
-#### Input with maxLength
+### Input with required fields
+When a field is orbit.
 
-<img src="asset/gif_max.gif"/> 
+<img src="assets/08.gif"/> 
+```tss
+"#textfieldTest": {
+    required: "Required field"
+}
+```tss
 
-```xml
-<Alloy>
-    <Window id="win">
-        <Widget src="input-materialdesign" maxLength="10" titleHint="Complement"/>
-    </Window>
-</Alloy>
+### Input with validation email and number
+It is possible to validate if the field typed is an email or a valid number through the 'maskType' attribute (email, number).
+
+<img src="assets/09.gif"/> 
+
+#### `email`
+```tss
+"#textfieldTest": {
+    maskType: "email"
+}
+```
+<img src="assets/10.gif"/> 
+
+#### `number`
+```tss
+"#textfieldTest": {
+    maskType: "number"
+}
 ```
 
-#### Input with Mask
-Through the mask attribute is possible to pass a regular expression to filter the field as the same .
+#### Input with password
+Just by setting the 'password' property the component already hides the characters.
+
+<img src="asset/03.gif"/> 
+
+```xml 
+<Widget src="input-materialdesign" id="textfieldTest" />
+```
+```tss
+"#textfieldTest": {
+    titleHint: "Password",
+    password: true
+}
+```
+
+It is also possible to add an action icon in the component, just by setting the 'iconAction' property in the file and 'tss' and creating a controller file for a callback function, see:
+
+`The code passed in the 'iconAction' attribute is some 'Fontawesome' unicode, you can use any icon in the link below, just pass the unicode correctly.`
+
+[Fontawesome.io/icon](http://fontawesome.io/icons/)
+
+<img src="assets/04.gif"/> 
+
+```xml 
+<Widget src="input-materialdesign" id="textfieldTest" />
+```
+```tss
+"#textfieldTest": {
+    titleHint: "Password",
+    password: true,
+    iconAction: '\uf070', 
+}
+```
+```js
+var _toFlag = false;
+$.textfieldTest.clickIconAction(function(e) {
+	$.textfield.setValue('');
+	$.textfield.setIconAction('');
+	if(!_toFlag) {
+		$.textfield.setPasswordMask(false);
+		 $.textfield.setIconAction('\uf06e');
+		_toFlag = true;		
+	} else { 
+		$.textfield.setPasswordMask(true); 
+		$.textfield.setIconAction('\uf070');
+		_toFlag = false;
+	}
+});
+```
+
+### another examples
+<img src="assets/11.gif"/> 
+
+Now it is possible to choose 3 types of animation besides the default [leftToRight, leftToRightToRightOut, expand]
+
+#### `leftToRight`
+<img src="assets/05.gif"/>
+
+#### `leftToRightToRightOut`
+<img src="assets/06.gif"/>
+
+#### `expand`
+<img src="assets/07.gif"/>
 
 ```xml
-<Widget src="input-materialdesign" mask="/^[0-9]+$/"/>
+<Widget src="input-materialdesign" id="textfieldTest"/>
+```
+```tss
+"#textfieldTest": {
+    titleHint: "Company User",
+    animationType: 'leftToRight' // or leftToRightToRightOut or expand, When you do not add anything, it's standard animation.
+}
 ```
 
 ## Methods
@@ -70,6 +165,10 @@ There are the methods available to access from `.js` files.
 | `ANIMATION_UP` | Animation rise |
 | `ANIMATION_DOWN` | Animation descent |
 | `listener(event, callback)` | Assigns event for input , listening to a callback |
+| `clickIconAction(callback)` | IconAction's click return function |
+| `setPasswordMask(value)` | Defines whether the field will show or hide the characters |
+| `setIconAction(value)` | Defines action icon |
+| `setEditable(value)` | Defines whether the component will be locked or not |
 
 
 ## Attributes
@@ -81,7 +180,7 @@ There are all attributes supporting by this widget.
 | `animationDuration` | Number | Duration animation |
 | `width` | String, Number | Sets the width |
 | `colorFocus` | String | Sets the color when the focused field |
-| `colorPattern` | String | Sets the standard color when the field started |
+| `colorDefault` | String | Sets the standard color when the field started |
 | `colorFont` | String | Sets the font color |
 | `titleHint` | String | Sets title |
 | `top` | String, Number | Defines the top |
