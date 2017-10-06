@@ -18,42 +18,6 @@ exports.clickIconAction = clickIconAction;
 exports.setPasswordMask = setPasswordMask;
 exports.setIconAction = setIconAction;
 
-function getValue() {
-	return $.textfield.getValue();
-}
-
-function setValue(value, uping) {
-	if (uping)
-		_upInteraction();
-	$.textfield.setValue(value);
-}
-
-function listener(event, callback) {
-	$.textfield.addEventListener(event, function(e) {
-		callback(e);
-	});
-};
-function blur(toFocus) {
-	$.textfield.blur();
-};
-function focus() {
-	$.textfield.focus();
-};
-function clickIconAction(_callbackIconAction) {
-	if (!$.args.iconAction)
-		return;
-
-	_EVENTSINTERACTION.listener($.iconAction, _EVENTS.CLICK, _callbackIconAction);
-}
-
-function setPasswordMask(value) {
-	$.textfield.setPasswordMask(value);
-}
-
-function setIconAction(value) {
-	$.iconAction.setText(value);
-}
-
 function _getController(controller) {
 	return Widget.createController(controller);
 }
@@ -301,18 +265,55 @@ function postionOverrideFooterAnimation() {
 			$.footer.setWidth(0.1);
 			break;	
 	}
-}( function(args) {
-		_EVENTSINTERACTION = _getController('_eventsInteraction');
-		_PROPERTIES = _getController('_properties');
-		_ANIMATION = _getController('_animation');
-		_PROPERTIES.apply(args);
-		_PROPERTIES.set('animation', _ANIMATION.getPropertiesConfig());
+}
 
-		contructorElement(args);
+(function(args) {
+	_EVENTSINTERACTION = _getController('_eventsInteraction');
+	_PROPERTIES = _getController('_properties');
+	_ANIMATION = _getController('_animation');
+	_PROPERTIES.apply(args);
+	_PROPERTIES.set('animation', _ANIMATION.getPropertiesConfig());
 
-		_EVENTS = _PROPERTIES.get('EVENTS');
-		_EVENTSINTERACTION.listener($.textfield, _EVENTS.FOCUS, _upInteraction);
-		_EVENTSINTERACTION.listener($.textfield, _EVENTS.CHANGE, _changeInteraction);
-		_EVENTSINTERACTION.listener($.textfield, _EVENTS.BLUR, _blurInteraction);
-	}($.args));
+	contructorElement(args);
 
+	_EVENTS = _PROPERTIES.get('EVENTS');
+	_EVENTSINTERACTION.listener($.textfield, _EVENTS.FOCUS, _upInteraction);
+	_EVENTSINTERACTION.listener($.textfield, _EVENTS.CHANGE, _changeInteraction);
+	_EVENTSINTERACTION.listener($.textfield, _EVENTS.BLUR, _blurInteraction);
+}($.args));
+
+function getValue() {
+	return $.textfield.getValue();
+}
+
+function setValue(value, uping) {
+	if (uping)
+		_upInteraction();
+	$.textfield.setValue(value);
+}
+
+function listener(event, callback) {
+	$.textfield.addEventListener(event, function(e) {
+		callback(e);
+	});
+};
+function blur(toFocus) {
+	$.textfield.blur();
+};
+function focus() {
+	$.textfield.focus();
+};
+function clickIconAction(_callbackIconAction) {
+	if (!$.args.iconAction)
+		return;
+
+	_EVENTSINTERACTION.listener($.iconAction, _EVENTS.CLICK, _callbackIconAction);
+}
+
+function setPasswordMask(value) {
+	$.textfield.setPasswordMask(value);
+}
+
+function setIconAction(value) {
+	$.iconAction.setText(value);
+}
