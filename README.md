@@ -34,7 +34,6 @@ Below you will see some examples.
 }
 ```
 
-
 #### Input with character counter
 Input with character counter, the maximum number of characters is set, when the component exceeds, the component shows an error notification.
 
