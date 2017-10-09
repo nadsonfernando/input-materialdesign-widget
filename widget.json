@@ -3,10 +3,10 @@
 	"name": "input-materialdesign",
 	"description" : "Google's Material Design, input or textfield concept material design",
 	"author": "Nádson Fernando",
-	"version": "1.2",
+	"version": "2.0",
 	"copyright":"Copyright (c) 2015",
 	"license":"Public Domain",
-	"min-alloy-version": "1.2",
+	"min-alloy-version": "2.0",
 	"min-titanium-version":"2.1",
 	"tags":"",
 	"platforms":"android,ios"
