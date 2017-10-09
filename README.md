@@ -195,5 +195,5 @@ There are all attributes supporting by this widget.
 | `minLength` | Number | Defines the minimum number of characters |
 | `exceedingColor` | String | Set the color when it exceeds the reported number of characters |
 | `toUpperCase` | Boolean | Sets the field to get me high box |
-| `mask` | String | Defines whether some shade to the field, as there is no default , but can be defined as numeric, accepting only numbers, or you can spend a regular expression whatsoever. |
+| `maskType` ['number' or 'email'] | String | Defines whether some shade to the field, as there is no default , but can be defined as numeric, accepting only numbers, or you can spend a regular expression whatsoever. |
 | `required` | String | Defines whether the field is required , passing a message as parameter |
