@@ -162,6 +162,8 @@ There are the methods available to access from `.js` files.
 | `getValue` | Returns the value of input |
 | `setValue` | Assigns value to input |
 | `setEditable` | The input block |
+| `focus` | Gives focus on field |
+| `blur` | Gives blur on field |
 | `ANIMATION_UP` | Animation rise |
 | `ANIMATION_DOWN` | Animation descent |
 | `listener(event, callback)` | Assigns event for input , listening to a callback |
