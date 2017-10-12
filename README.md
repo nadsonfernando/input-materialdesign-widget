@@ -37,7 +37,7 @@ Below you will see some examples.
 #### Input with character counter
 Input with character counter, the maximum number of characters is set, when the component exceeds, the component shows an error notification.
 
-<img src="asset/02.gif"/>
+<img src="assets/02.gif"/>
 
 ```xml 
 <Widget src="input-materialdesign" id="textfieldTest" />
