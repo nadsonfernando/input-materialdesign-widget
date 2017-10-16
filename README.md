@@ -3,8 +3,7 @@
 
 Appcelerator TextField Material Design concept!
 
-This is a widget based on [Material Design](https://material.io/guidelines/) concept, supporting multiple platforms, even android.
-
+This is a widget based on [Material Design](https://material.io/guidelines/) concept, which works for iphone, ipad and android, even Android.
 
 ## Installation
 
