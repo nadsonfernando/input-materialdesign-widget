@@ -115,15 +115,15 @@ It is also possible to add an action icon in the component, just by setting the 
 ```js
 var _toFlag = false;
 $.textfieldTest.clickIconAction(function(e) {
-	$.textfield.setValue('');
-	$.textfield.setIconAction('');
+	$.textfieldTest.setValue('');
+	$.textfieldTest.setIconAction('');
 	if(!_toFlag) {
-		$.textfield.setPasswordMask(false);
-		 $.textfield.setIconAction('\uf06e');
+		$.textfieldTest.setPasswordMask(false);
+		 $.textfieldTest.setIconAction('\uf06e');
 		_toFlag = true;		
 	} else { 
-		$.textfield.setPasswordMask(true); 
-		$.textfield.setIconAction('\uf070');
+		$.textfieldTest.setPasswordMask(true); 
+		$.textfieldTest.setIconAction('\uf070');
 		_toFlag = false;
 	}
 });
