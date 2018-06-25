@@ -1,5 +1,5 @@
 # input-materialdesign-widget
-[![Gittio](asset/gittio-usage.png)](http://gitt.io/component/input-materialdesign)
+[![Gittio](assets/gittio-usage.png)](http://gitt.io/component/input-materialdesign)
 
 Appcelerator TextField Material Design concept!
 
