@@ -82,7 +82,7 @@ It is possible to validate if the field typed is an email or a valid number thro
 #### Input with password
 Just by setting the 'password' property the component already hides the characters.
 
-<img src="asset/03.gif"/> 
+<img src="assets/03.gif"/> 
 
 ```xml 
 <Widget src="input-materialdesign" id="textfieldTest" />
